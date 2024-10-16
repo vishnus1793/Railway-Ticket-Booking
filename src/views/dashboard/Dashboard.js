@@ -1,6 +1,5 @@
-import React from 'react'
-import classNames from 'classnames'
-
+import React from "react";
+import classNames from "classnames";
 import {
   CAvatar,
   CButton,
@@ -18,59 +17,44 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
-} from '@coreui/react'
-import CIcon from '@coreui/icons-react'
-import {
-  cibCcAmex,
-  cibCcApplePay,
-  cibCcMastercard,
-  cibCcPaypal,
-  cibCcStripe,
-  cibCcVisa,
-  cibGoogle,
-  cibFacebook,
-  cibLinkedin,
-  cifBr,
-  cifEs,
-  cifFr,
-  cifIn,
-  cifPl,
-  cifUs,
-  cibTwitter,
-  cilCloudDownload,
-  cilPeople,
-  cilUser,
-  cilUserFemale,
-} from '@coreui/icons'
-
-import avatar1 from 'src/assets/images/avatars/1.jpg'
-import avatar2 from 'src/assets/images/avatars/2.jpg'
-import avatar3 from 'src/assets/images/avatars/3.jpg'
-import avatar4 from 'src/assets/images/avatars/4.jpg'
-import avatar5 from 'src/assets/images/avatars/5.jpg'
-import avatar6 from 'src/assets/images/avatars/6.jpg'
-
-import FoodBrand from '../widgets/FoodBrand'
-import FoodDropdown from '../widgets/FoodDropdown'
-import MainChart from './MainChart'
+} from "@coreui/react";
+import CIcon from "@coreui/icons-react";
+import { cilCloudDownload } from "@coreui/icons";
+import FoodBrand from "../widgets/FoodBrand";
+import FoodDropdown from "../widgets/FoodDropdown";
+import MainChart from "./MainChart";
+import html2canvas from "html2canvas";
+import { saveAs } from "file-saver";
 
 const Dashboard = () => {
-  const progressExample = [
-    { title: 'Visits', value: '29.703 Users', percent: 40, color: 'success' },
-    { title: 'Unique', value: '24.093 Users', percent: 20, color: 'info' },
-    { title: 'Pageviews', value: '78.706 Views', percent: 60, color: 'warning' },
-    { title: 'New Users', value: '22.123 Users', percent: 80, color: 'danger' },
-    { title: 'Bounce Rate', value: 'Average Rate', percent: 40.15, color: 'primary' },
-  ]
-
   const trainDetails = [
-    { stationCode: 'ALLP', stationName: 'ALLEPPEY', routeNumber: 1, arrivalTime: '--', departureTime: '15:20', haltTime: '--', distance: 0, day: 1 },
-    { stationCode: 'SRTL', stationName: 'CHERTHALA', routeNumber: 1, arrivalTime: '15:39', departureTime: '15:40', haltTime: '1', distance: 24, day: 1 },
-    { stationCode: 'TUVR', stationName: 'TURAVUR', routeNumber: 1, arrivalTime: '15:50', departureTime: '15:51', haltTime: '1', distance: 34, day: 1 },
-    { stationCode: 'ERS', stationName: 'ERNAKULAM JN', routeNumber: 1, arrivalTime: '16:35', departureTime: '16:40', haltTime: '5', distance: 57, day: 1 },
-    { stationCode: 'ERN', stationName: 'ERNAKULAM TOWN', routeNumber: 1, arrivalTime: '16:50', departureTime: '16:52', haltTime: '2', distance: 60, day: 1 },
-    // Add the rest of the train details similarly...
-  ]
+    { stationCode: "ALLP", stationName: "ALLEPPEY", routeNumber: 1, arrivalTime: "--", departureTime: "15:20", haltTime: "--", distance: 0, day: 1 },
+    { stationCode: "SRTL", stationName: "CHERTHALA", routeNumber: 1, arrivalTime: "15:39", departureTime: "15:40", haltTime: "1", distance: 24, day: 1 },
+    { stationCode: "TUVR", stationName: "TURAVUR", routeNumber: 1, arrivalTime: "15:50", departureTime: "15:51", haltTime: "1", distance: 34, day: 1 },
+    { stationCode: "ERS", stationName: "ERNAKULAM JN", routeNumber: 1, arrivalTime: "16:35", departureTime: "16:40", haltTime: "5", distance: 57, day: 1 },
+    { stationCode: "ERN", stationName: "ERNAKULAM TOWN", routeNumber: 1, arrivalTime: "16:50", departureTime: "16:52", haltTime: "2", distance: 60, day: 1 },
+  ];
+
+  const downloadChart = () => {
+    const chartElement = document.getElementById("chartContainer");
+
+    if (!chartElement) {
+      console.error("Chart container not found");
+      return;
+    }
+
+    html2canvas(chartElement, { scale: 2 }).then((canvas) => {
+      canvas.toBlob((blob) => {
+        if (blob) {
+          saveAs(blob, "chart.png"); // Save chart as image
+        } else {
+          console.error("Failed to generate image");
+        }
+      });
+    }).catch((error) => {
+      console.error("Error capturing the chart:", error);
+    });
+  };
 
   return (
     <>
@@ -79,13 +63,11 @@ const Dashboard = () => {
         <CCardBody>
           <CRow>
             <CCol sm={5}>
-              <h4 id="traffic" className="card-title mb-0">
-                Traffic
-              </h4>
+              <h4 id="traffic" className="card-title mb-0">Ticket Sales</h4>
               <div className="small text-body-secondary">January - July 2023</div>
             </CCol>
             <CCol sm={7} className="d-none d-md-block">
-              <CButton color="primary" className="float-end">
+              <CButton color="primary" className="float-end" onClick={downloadChart}>
                 <CIcon icon={cilCloudDownload} />
               </CButton>
               <CButtonGroup className="float-end me-3">
@@ -102,31 +84,10 @@ const Dashboard = () => {
               </CButtonGroup>
             </CCol>
           </CRow>
-          <MainChart />
+          <MainChart ticketPrices={trainDetails.map(train => ({ station: train.stationName, price: Math.random() * 100 }))} />
         </CCardBody>
         <CCardFooter>
-          <CRow
-            xs={{ cols: 1, gutter: 4 }}
-            sm={{ cols: 2 }}
-            lg={{ cols: 4 }}
-            xl={{ cols: 5 }}
-            className="mb-2 text-center"
-          >
-            {progressExample.map((item, index, items) => (
-              <CCol
-                className={classNames({
-                  'd-none d-xl-block': index + 1 === items.length,
-                })}
-                key={index}
-              >
-                <div className="text-body-secondary">{item.title}</div>
-                <div className="fw-semibold text-truncate">
-                  {item.value} ({item.percent}%)
-                </div>
-                <CProgress thin className="mt-2" color={item.color} value={item.percent} />
-              </CCol>
-            ))}
-          </CRow>
+          {/* Your progress bars can go here if needed */}
         </CCardFooter>
       </CCard>
       <FoodBrand className="mb-4" withCharts />
@@ -168,7 +129,7 @@ const Dashboard = () => {
         </CCol>
       </CRow>
     </>
-  )
-}
+  );
+};
 
-export default Dashboard
+export default Dashboard;

@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import {
   CAvatar,
   CBadge,
@@ -12,12 +13,10 @@ import {
 import {
   cilBell,
   cilCreditCard,
-  cilCommentSquare,
   cilEnvelopeOpen,
   cilFile,
   cilLockLocked,
   cilSettings,
-  cilTask,
   cilUser,
 } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
@@ -25,6 +24,13 @@ import CIcon from '@coreui/icons-react'
 import avatar8 from 'src/assets/luffy.jpg'
 
 const AppHeaderDropdown = () => {
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    // Perform any logout actions here, e.g., clearing tokens
+    navigate('/login') // Redirect to the login page
+  }
+
   return (
     <CDropdown variant="nav-item">
       <CDropdownToggle placement="bottom-end" className="py-0 pe-0" caret={false}>
@@ -46,7 +52,7 @@ const AppHeaderDropdown = () => {
             42
           </CBadge>
         </CDropdownItem>
-        
+
         <CDropdownHeader className="bg-body-secondary fw-semibold my-2">Settings</CDropdownHeader>
         <CDropdownItem href="#">
           <CIcon icon={cilUser} className="me-2" />
@@ -68,7 +74,7 @@ const AppHeaderDropdown = () => {
           History
         </CDropdownItem>
         <CDropdownDivider />
-        <CDropdownItem href="#">
+        <CDropdownItem onClick={handleLogout}>
           <CIcon icon={cilLockLocked} className="me-2" />
           Log Out
         </CDropdownItem>
