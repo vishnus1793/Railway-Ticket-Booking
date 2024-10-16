@@ -27,8 +27,11 @@ const AppHeaderDropdown = () => {
   const navigate = useNavigate()
 
   const handleLogout = () => {
-    // Perform any logout actions here, e.g., clearing tokens
-    navigate('/login') // Redirect to the login page
+    navigate('/login') 
+  }
+
+  const handleHistoryClick = () => {
+    navigate('/views/buttons/dropdowns/Dropdowns') 
   }
 
   return (
@@ -69,7 +72,7 @@ const AppHeaderDropdown = () => {
             42
           </CBadge>
         </CDropdownItem>
-        <CDropdownItem href="#">
+        <CDropdownItem onClick={handleHistoryClick}>
           <CIcon icon={cilFile} className="me-2" />
           History
         </CDropdownItem>

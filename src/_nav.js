@@ -42,16 +42,23 @@ const _nav = [
   },
   {
     component: CNavItem,
+    name: 'Ticket',
+    to: 'https://www.irctc.co.in/nget/train-search',
+    icon: <CIcon icon={cilDescription} customClassName="nav-icon" />,
+    target: '_blank', // Open in a new tab
+    rel: 'noopener noreferrer', // Security measure for external links
+    componentProps: { 
+      href: 'https://www.irctc.co.in/nget/train-search' 
+    },
+  },
+  
+  {
+    component: CNavItem,
     name: 'Order Food',
     to: '/widgets',
     icon: <CIcon icon={cilFastfood} customClassName="nav-icon" />,
   },
-  {
-    component: CNavItem,
-    name: 'TravelGPT',
-    to: '/docs', // Use an internal route instead
-    icon: <CIcon icon={cilDescription} customClassName="nav-icon" />,
-  },
+  
   {
     component: CNavItem,
     name: 'ChatGpt',
@@ -74,6 +81,7 @@ const _nav = [
     name: 'New Entry',
     to: '/register',
   },
+  
 ];
 
 export default _nav;
